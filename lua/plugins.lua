@@ -70,4 +70,12 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {},
   },
+
+  -- Popup showing available keymaps as you type a prefix (e.g. <leader>).
+  -- Reads the `desc` already set on every keymap in this config.
+  {
+    'folke/which-key.nvim',
+    event = 'VeryLazy',
+    opts = {},
+  },
 }

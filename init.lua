@@ -1,3 +1,8 @@
+-- Hybrid line numbers: absolute on the current line, relative elsewhere.
+-- Terminal buffers opt out of this below, in the TermOpen autocmd.
+vim.opt.number = true
+vim.opt.relativenumber = true
+
 -- Exit terminal mode easily
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { desc = 'Exit terminal mode' })
 

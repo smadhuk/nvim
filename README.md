@@ -38,6 +38,10 @@ in a broken state). After editing config, quit and reopen Neovim instead.
 
 ## Keymaps
 
+All keymaps below are documented in-editor too: press `<leader>` (or any
+prefix key like `g` or `[`) and pause — which-key.nvim pops up showing every
+available continuation with its description, live and always up to date.
+
 ### Window / terminal navigation
 
 | Key | Mode | Action |
