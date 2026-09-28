@@ -19,8 +19,17 @@ return {
     'saghen/blink.cmp',
     version = '*',
     opts = {
-      keymap = { preset = 'default' }, -- <C-y> confirm, <C-n>/<C-p> select, <C-space> open docs
+      -- 'enter' preset: <CR> accepts. <Tab>/<S-Tab> cycle the menu, and fall
+      -- back to snippet jumping / a literal Tab when no menu is open.
+      keymap = {
+        preset = 'enter',
+        ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
+        ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
+      },
       completion = {
+        -- Nothing is pre-selected, so <CR> only accepts once you've tabbed
+        -- to an item; otherwise it inserts a normal newline.
+        list = { selection = { preselect = false } },
         documentation = { auto_show = true },
       },
       sources = {
@@ -77,5 +86,22 @@ return {
     'folke/which-key.nvim',
     event = 'VeryLazy',
     opts = {},
+  },
+
+  -- Tab-like bar showing open buffers.
+  {
+    'akinsho/bufferline.nvim',
+    version = '*',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      options = {
+        always_show_bufferline = true,
+        diagnostics = 'nvim_lsp', -- shows LSP error/warning counts per buffer
+        -- Keeps the bar from overlapping the nvim-tree sidebar when it's open.
+        offsets = {
+          { filetype = 'NvimTree', text = 'File Explorer', highlight = 'Directory', text_align = 'left' },
+        },
+      },
+    },
   },
 }

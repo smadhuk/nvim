@@ -1,3 +1,7 @@
+-- <leader> is expanded when each mapping is defined, so this must come before
+-- every <leader> keymap in this file and before any plugin spec runs.
+vim.g.mapleader = ','
+
 -- Hybrid line numbers: absolute on the current line, relative elsewhere.
 -- Terminal buffers opt out of this below, in the TermOpen autocmd.
 vim.opt.number = true
@@ -59,9 +63,10 @@ vim.api.nvim_create_user_command('QA', 'qa', { bang = true })
 vim.keymap.set('n', '<C-s>', ':w<CR>', { desc = 'Save file' })
 vim.keymap.set('i', '<C-s>', '<Esc>:w<CR>', { desc = 'Save file' })
 
--- Set <leader> before any plugin spec runs, since plugins may reference it
--- when they set up their own keymaps.
-vim.g.mapleader = ','
+-- Toggle comments. Neovim's built-in `gc` operator does the work; the
+-- mappings must remap (remap = true) because gc/gcc are themselves mappings.
+vim.keymap.set('n', '<leader>/', 'gcc', { remap = true, desc = 'Toggle comment' })
+vim.keymap.set('v', '<leader>/', 'gc', { remap = true, desc = 'Toggle comment' })
 
 -- nvim-tree replaces the built-in netrw explorer; disable netrw first to
 -- avoid the two fighting over directory buffers.
@@ -83,3 +88,4 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup(require('plugins'))
 require('lsp')
 require('explore')
+require('buffers')

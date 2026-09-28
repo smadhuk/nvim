@@ -59,6 +59,17 @@ Terminal buffers auto-enter insert mode on focus and hide line numbers.
 | `<C-s>` | normal, insert | Save file |
 | `:W` `:Q` `:Wq` `:WQ` `:Qa` `:QA` | command | Aliases for the lowercase equivalents (forgives shift-key typos) |
 
+### Commenting
+
+Uses Neovim's built-in commenting, which picks the right comment syntax per
+filetype (`#` for Python, `//` for C/C++/CUDA).
+
+| Key | Mode | Action |
+|---|---|---|
+| `<leader>/` | normal | Toggle comment on the current line |
+| `<leader>/` | visual | Toggle comment on the selected lines |
+| `gc{motion}` | normal | Built-in operator, e.g. `gcap` comments a paragraph |
+
 ### LSP (active once a server attaches to the buffer)
 
 | Key | Action |
@@ -72,6 +83,31 @@ Terminal buffers auto-enter insert mode on focus and hide line numbers.
 | `<leader>ca` | Code action |
 | `<leader>f` | Format buffer |
 | `[d` / `]d` | Previous / next diagnostic |
+| `<leader>sd` | Show the full diagnostic for the current line in a floating window (not truncated by narrow splits) |
+
+### Completion (blink.cmp, insert mode)
+
+The menu opens automatically as you type. Nothing is pre-selected, so
+`<CR>` inserts a normal newline until you've tabbed to an item.
+
+| Key | Action |
+|---|---|
+| `<Tab>` / `<S-Tab>` | Next / previous item (jumps snippet placeholders when no menu is open) |
+| `<CR>` | Accept the selected item |
+| `<C-e>` | Close the menu |
+| `<C-space>` | Open the menu / toggle docs |
+
+### Buffers
+
+A bufferline (tab bar) is always visible at the top showing open buffers,
+with per-buffer LSP diagnostic counts.
+
+| Key | Action |
+|---|---|
+| `<leader>h` | Previous buffer |
+| `<leader>l` | Next buffer |
+| `<leader>bp` | Pick a buffer by its tab letter |
+| `<leader>bd` | Close current buffer, keeping the window/split open |
 
 ### Finding things
 
@@ -85,7 +121,10 @@ Terminal buffers auto-enter insert mode on focus and hide line numbers.
 
 ## Language support
 
-- **Python**: `pyright` (types) + `ruff` (lint/format) via Mason
+- **Python**: `pyright` (types) + `ruff` (lint/format) via Mason. Saving a
+  `.py` file sorts its imports through ruff's "Organize imports" action (see
+  `lua/lsp.lua`); this happens even in projects that don't enable ruff's `I`
+  rules. It does not run the formatter — use `<leader>f` for that.
 - **C++**: `clangd`. Needs a `compile_commands.json` for real accuracy:
   - CMake: `cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -B build && ln -s build/compile_commands.json .`
   - Makefile: `brew install bear && bear -- make`
